@@ -18,8 +18,12 @@ ShopifyApp.configure do |config|
     { topic: "shop/redact", address: "webhooks/shop_redact"}
   ]
 
-  config.api_key = ENV.fetch('SHOPIFY_API_KEY', '').presence
-  config.secret = ENV.fetch('SHOPIFY_API_SECRET', '').presence
+  # These came w/ the generator & prevented rails server, maybe configged to use a gem?:
+  # config.api_key = ENV.fetch('SHOPIFY_API_KEY', '').presence
+  # config.secret = ENV.fetch('SHOPIFY_API_SECRET', '').presence
+  # These are mine and work, for Rails Creds file:
+  config.api_key = Rails.application.credentials.SHOPIFY_API_KEY.presence
+  config.secret = Rails.application.credentials.SHOPIFY_API_SECRET.presence
 
   # You may want to charge merchants for using your app. Setting the billing configuration will cause the Authenticated
   # controller concern to check that the session is for a merchant that has an active one-time payment or subscription.
@@ -48,7 +52,10 @@ Rails.application.config.after_initialize do
       api_key: ShopifyApp.configuration.api_key,
       api_secret_key: ShopifyApp.configuration.secret,
       api_version: ShopifyApp.configuration.api_version,
-      host: ENV['HOST'],
+      # This came w/ the generator & prevented rails server, maybe configged to use a gem?:
+      # host: ENV['HOST'],
+      # my code:
+      host: Rails.application.credentials.HOST.presence,
       scope: ShopifyApp.configuration.scope,
       is_private: !ENV.fetch('SHOPIFY_APP_PRIVATE_SHOP', '').empty?,
       is_embedded: ShopifyApp.configuration.embedded_app,
