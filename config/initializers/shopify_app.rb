@@ -1,7 +1,7 @@
 ShopifyApp.configure do |config|
   config.application_name = "RailsNew8Gem"
   config.old_secret = ""
-  config.scope = "read_products, write_products" # Consult this page for more scope options:
+  config.scope = "read_products" # Consult this page for more scope options:
                                   # https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
   config.embedded_app = true
   config.new_embedded_auth_strategy = true
@@ -24,6 +24,9 @@ ShopifyApp.configure do |config|
   # These are mine and work, for Rails Creds file:
   config.api_key = Rails.application.credentials.SHOPIFY_API_KEY.presence
   config.secret = Rails.application.credentials.SHOPIFY_API_SECRET.presence
+
+  # Added from reading gem doc: https://github.com/Shopify/shopify_app/blob/main/docs/shopify_app/generators.md#shopify_app_disable_webpacker
+  config.disable_webpacker = true
 
   # You may want to charge merchants for using your app. Setting the billing configuration will cause the Authenticated
   # controller concern to check that the session is for a merchant that has an active one-time payment or subscription.
